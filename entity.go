@@ -1,6 +1,6 @@
 package main
 
-type BeforeEODData struct {
+type EODData struct {
 	ID               int
 	Name             string
 	Age              int
@@ -8,4 +8,8 @@ type BeforeEODData struct {
 	PreviousBalanced float64
 	AverageBalanced  float64
 	FreeTransfer     int
+
+	FirstThreadNumber  int32
+	SecondThreadNumber int32
+	ThirdThreadNumber  int32
 }

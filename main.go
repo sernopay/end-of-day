@@ -1,15 +1,10 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"os"
-)
-
 func main() {
-	if len(os.Args) == 1 {
-		log.Fatal("file name is required")
-	}
-	previousEODList := ReadBeforeEODCSV(os.Args[1])
-	fmt.Println(previousEODList)
+	inputFileName := "before-eod/Before Eod.csv"
+	outputFileName := "after-eod/After Eod.csv"
+
+	EODList := readBeforeEODCSV(inputFileName)
+	processEOD(EODList)
+	writeAfterEODCSV(outputFileName, EODList)
 }
