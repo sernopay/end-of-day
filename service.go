@@ -144,21 +144,25 @@ func calculateBonus() {
 }
 
 func processEOD(EODList []*EODData) {
-	lCh = make(chan *EODData)
-	maxNumberOfChannel := 8
-	for i := 0; i < maxNumberOfChannel; i++ {
-		wg.Add(1)
-		go calculateBonus()
-	}
 
 	for _, eod := range EODList {
 		wg.Add(1)
 		go calculateAvargeBalance(eod)
 		wg.Add(1)
 		go calculateBenefit(eod)
-		lCh <- eod
 	}
 
+	wg.Wait()
+
+	lCh = make(chan *EODData)
+	maxNumberOfChannel := 8
+	for i := 0; i < maxNumberOfChannel; i++ {
+		wg.Add(1)
+		go calculateBonus()
+	}
+	for _, eod := range EODList {
+		lCh <- eod
+	}
 	close(lCh)
 	wg.Wait()
 }
